@@ -1,0 +1,6 @@
+Encoding adalah proses mengubah data dari satu format ke format lain agar lebih mudah disimpan, dikirim, atau dibaca sistem lain.
+
+Encoding:                       Encryption:
+Bisa dibalik tanpa kunci	      Membutuhkan kunci
+Untuk representasi data	        Untuk keamanan data
+Contoh: Base64, Hex	            Contoh: AES, RSA
