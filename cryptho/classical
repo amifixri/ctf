@@ -14,7 +14,7 @@ def caesar_encrypt(text, shift):
 
 print(caesar_encrypt("HELLO", 3))
 
-
+=====================================================================================
 
 Atbash Chiper adalah Huruf dibalik. Tools online dCode Atbash Cipher, Cryptii Atbash.
 
@@ -31,7 +31,7 @@ def atbash(text):
 
 print(atbash("HELLO"))
 
-
+============================================================================================================
 
 Vignere Chiper Menggunakan keyword sebagai kunci. Tools online dCode Vigenere Cipher, Cryptii Vigenere Cipher.
 def vigenere_encrypt(text, key):
@@ -47,6 +47,7 @@ def vigenere_encrypt(text, key):
 
 print(vigenere_encrypt("HELLO", "KEY"))
 
+==================================================================================================
 
 Affine Cipher. Tools dCode Affine Cipher, Cryptii Affine Cipher.
 def affine_encrypt(text, a, b):
@@ -61,6 +62,7 @@ def affine_encrypt(text, a, b):
 
 print(affine_encrypt("HELLO",5,8))
 
+=========================================================================================================
 
 Simple Substitution Cipher Setiap huruf diganti menggunakan alfabet acak. Tools dCode Substitution Cipher, 
 Cryptii Substitution Cipher.
@@ -74,6 +76,8 @@ text = "HELLO"
 cipher = ''.join(mapping[c] for c in text)
 
 print(cipher)
+
+==================================================================================================
 
 XOR Cipher Operasi XOR antara plaintext dan key. Tools CyberChef, dCode XOR Cipher.
 def xor_encrypt(text, key):
