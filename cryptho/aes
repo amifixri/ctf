@@ -14,7 +14,7 @@ plaintext = unpad(cipher.decrypt(ciphertext),16)
 
 print(plaintext.decode())
 
-
+======================================================================================
 
 CBC (Cipher Block Chaining) Setiap blok plaintext di-XOR dengan ciphertext sebelumnya.
 
@@ -32,7 +32,7 @@ plaintext = unpad(cipher.decrypt(ciphertext),16)
 
 print(plaintext.decode
 
-
+======================================================================================
 
 CTR (Counter Mode) AES digunakan untuk membuat keystream.
 
@@ -59,7 +59,7 @@ plaintext = cipher.decrypt(
 
 print(plaintext.decode())
 
-
+====================================================================================================
 
 CFB (Cipher Feedback) AES menghasilkan output yang digunakan untuk mengenkripsi plaintext berikutnya.
 
@@ -80,6 +80,8 @@ plaintext = cipher.decrypt(
 
 print(plaintext.decode())
 
+=======================================================================
+
 OFB (Output Feedback), AES menghasilkan keystream terlebih dahulu.
 from Crypto.Cipher import AES
 
@@ -98,7 +100,7 @@ plaintext = cipher.decrypt(
 
 print(plaintext.decode())
 
-
+===========================================================================
 
 GCM (Galois Counter Mode), Gabungan:
 AES CTR
