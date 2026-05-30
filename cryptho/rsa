@@ -1,0 +1,56 @@
+Common Modulus Attack terjadi ketika:
+n sama
+e berbeda
+plaintext sama
+Tools RsaCtfTool, dCode RSA Cipher.
+from Crypto.Util.number import inverse
+
+def common_modulus(c1,c2,e1,e2,n):
+    def egcd(a,b):
+        if b==0:
+            return (1,0,a)
+        x,y,g=egcd(b,a%b)
+        return (y,x-(a//b)*y,g)
+
+    a,b,_=egcd(e1,e2)
+
+    if a < 0:
+        c1 = inverse(c1,n)
+        a = -a
+
+    if b < 0:
+        c2 = inverse(c2,n)
+        b = -b
+
+    m = (pow(c1,a,n)*pow(c2,b,n)) % n
+
+    return m
+
+
+
+      
+Hastad Broadcast Attack Terjadi jika:
+plaintext sama
+e kecil (biasanya e=3)
+beberapa penerima berbeda
+Tools RsaCtfTool, Crypto-Attacks Repository.
+
+
+
+Multi-Prime RSA Attack
+Konsep
+RSA normal:
+n=pq
+Multi-prime:
+n=pqr
+atau lebih banyak faktor. 
+Tools FactorDB, RsaCtfTool.
+
+
+Twin Prime RSA Attack
+Konsep
+Terjadi ketika:
+q = p + 2
+Contoh:
+p = 101
+q = 103                
