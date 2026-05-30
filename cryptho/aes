@@ -1,0 +1,133 @@
+ECB (Electronic Codebook) AES membagi plaintext menjadi blok 16 byte.
+Setiap blok dienkripsi secara independen menggunakan key yang sama.
+
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+
+key = b"1234567890123456"
+
+ciphertext = bytes.fromhex("YOUR_HEX")
+
+cipher = AES.new(key, AES.MODE_ECB)
+
+plaintext = unpad(cipher.decrypt(ciphertext),16)
+
+print(plaintext.decode())
+
+
+
+CBC (Cipher Block Chaining) Setiap blok plaintext di-XOR dengan ciphertext sebelumnya.
+
+from Crypto.Cipher import AES
+from Crypto.Util.Padding import unpad
+
+key = b"1234567890123456"
+iv = b"abcdefghijklmnop"
+
+ciphertext = bytes.fromhex("YOUR_HEX")
+
+cipher = AES.new(key,AES.MODE_CBC,iv)
+
+plaintext = unpad(cipher.decrypt(ciphertext),16)
+
+print(plaintext.decode
+
+
+
+CTR (Counter Mode) AES digunakan untuk membuat keystream.
+
+from Crypto.Cipher import AES
+from Crypto.Util import Counter
+
+key = b"1234567890123456"
+nonce = b"12345678"
+
+ctr = Counter.new(
+    64,
+    prefix=nonce
+)
+
+cipher = AES.new(
+    key,
+    AES.MODE_CTR,
+    counter=ctr
+)
+
+plaintext = cipher.decrypt(
+    bytes.fromhex("YOUR_HEX")
+)
+
+print(plaintext.decode())
+
+
+
+CFB (Cipher Feedback) AES menghasilkan output yang digunakan untuk mengenkripsi plaintext berikutnya.
+
+from Crypto.Cipher import AES
+
+key = b"1234567890123456"
+iv = b"abcdefghijklmnop"
+
+cipher = AES.new(
+    key,
+    AES.MODE_CFB,
+    iv=iv
+)
+
+plaintext = cipher.decrypt(
+    bytes.fromhex("YOUR_HEX")
+)
+
+print(plaintext.decode())
+
+OFB (Output Feedback), AES menghasilkan keystream terlebih dahulu.
+from Crypto.Cipher import AES
+
+key = b"1234567890123456"
+iv = b"abcdefghijklmnop"
+
+cipher = AES.new(
+    key,
+    AES.MODE_OFB,
+    iv=iv
+)
+
+plaintext = cipher.decrypt(
+    bytes.fromhex("YOUR_HEX")
+)
+
+print(plaintext.decode())
+
+
+
+GCM (Galois Counter Mode), Gabungan:
+AES CTR
+Authentication Tag
+from Crypto.Cipher import AES
+
+key = b"1234567890123456"
+
+nonce = bytes.fromhex(
+    "00112233445566778899aabb"
+)
+
+ciphertext = bytes.fromhex(
+    "YOUR_CIPHER"
+)
+
+tag = bytes.fromhex(
+    "YOUR_TAG"
+)
+
+cipher = AES.new(
+    key,
+    AES.MODE_GCM,
+    nonce=nonce
+)
+
+plaintext = cipher.decrypt_and_verify(
+    ciphertext,
+    tag
+)
+
+print(plaintext.decode())
