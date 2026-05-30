@@ -1,1 +1,89 @@
+Caesar Chiper adalah Setiap huruf digeser sejumlah nilai tertentu. Tools Cryptii Caesar Cipher, dCode Caesar Cipher.
 
+def caesar_encrypt(text, shift):
+    result = ""
+
+    for char in text:
+        if char.isalpha():
+            base = ord('A') if char.isupper() else ord('a')
+            result += chr((ord(char) - base + shift) % 26 + base)
+        else:
+            result += char
+
+    return result
+
+print(caesar_encrypt("HELLO", 3))
+
+
+
+Atbash Chiper adalah Huruf dibalik. Tools online dCode Atbash Cipher, Cryptii Atbash.
+
+def atbash(text):
+    result = ""
+
+    for c in text.upper():
+        if c.isalpha():
+            result += chr(ord('Z') - (ord(c) - ord('A')))
+        else:
+            result += c
+
+    return result
+
+print(atbash("HELLO"))
+
+
+
+Vignere Chiper Menggunakan keyword sebagai kunci. Tools online dCode Vigenere Cipher, Cryptii Vigenere Cipher.
+def vigenere_encrypt(text, key):
+    result = ""
+    key = key.upper()
+
+    for i, char in enumerate(text.upper()):
+        if char.isalpha():
+            shift = ord(key[i % len(key)]) - ord('A')
+            result += chr((ord(char)-65+shift)%26+65)
+
+    return result
+
+print(vigenere_encrypt("HELLO", "KEY"))
+
+
+Affine Cipher. Tools dCode Affine Cipher, Cryptii Affine Cipher.
+def affine_encrypt(text, a, b):
+    result = ""
+
+    for char in text.upper():
+        if char.isalpha():
+            x = ord(char) - 65
+            result += chr(((a*x+b)%26)+65)
+
+    return result
+
+print(affine_encrypt("HELLO",5,8))
+
+
+Simple Substitution Cipher Setiap huruf diganti menggunakan alfabet acak. Tools dCode Substitution Cipher, 
+Cryptii Substitution Cipher.
+alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+key      = "QWERTYUIOPASDFGHJKLZXCVBNM"
+
+mapping = dict(zip(alphabet, key))
+
+text = "HELLO"
+
+cipher = ''.join(mapping[c] for c in text)
+
+print(cipher)
+
+XOR Cipher Operasi XOR antara plaintext dan key. Tools CyberChef, dCode XOR Cipher.
+def xor_encrypt(text, key):
+    result = ""
+
+    for c in text:
+        result += chr(ord(c) ^ key)
+
+    return result
+
+cipher = xor_encrypt("HELLO", 5)
+
+print(cipher)
