@@ -3,6 +3,7 @@ Smart's Attack
 Smart's Attack adalah serangan terhadap kurva eliptik anomalous.
 
 Kurva disebut anomalous jika:
+
 #E(Fp) = p
 Pada kondisi ini ECDLP yang normalnya sulit dapat diselesaikan secara efisien.
 
