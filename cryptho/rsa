@@ -26,8 +26,7 @@ def common_modulus(c1,c2,e1,e2,n):
 
     return m
 
-
-
+=============================================================================
       
 Hastad Broadcast Attack Terjadi jika:
 plaintext sama
@@ -35,7 +34,7 @@ e kecil (biasanya e=3)
 beberapa penerima berbeda
 Tools RsaCtfTool, Crypto-Attacks Repository.
 
-
+=============================================================================
 
 Multi-Prime RSA Attack
 Konsep
@@ -46,6 +45,7 @@ n=pqr
 atau lebih banyak faktor. 
 Tools FactorDB, RsaCtfTool.
 
+=============================================================================
 
 Twin Prime RSA Attack
 Konsep
@@ -54,3 +54,13 @@ q = p + 2
 Contoh:
 p = 101
 q = 103                
+
+=============================================================================
+
+RSA Playground:
+Cryptool RSA Demo
+dCode RSA Cipher
+Attack Tools:
+RsaCtfTool Official Repository
+crypto-attacks Repository
+FactorDB
