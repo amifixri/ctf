@@ -4,3 +4,101 @@ Encoding:                       Encryption:
 Bisa dibalik tanpa kunci	      Membutuhkan kunci
 Untuk representasi data	        Untuk keamanan data
 Contoh: Base64, Hex	            Contoh: AES, RSA
+
+TOOLS WAJIB: CYBERCHEF
+======================================================
+
+Base64 mengubah data biner menjadi karakter ASCII. Tools Base64 Guru
+echo "" | base64 
+atau 
+import base64
+
+text = "Hello"
+
+encoded = base64.b64encode(text.encode())
+print("Encoded:", encoded.decode())
+
+decoded = base64.b64decode(encoded)
+print("Decoded:", decoded.decode())
+
+======================================================
+
+Hexadecimal Representasi data menggunakan basis 16. Tools RapidTables Hex Converter (Hex Encode/Decode), 
+Browserling Hex Converter (Hex ↔ ASCII).
+
+text = "Hello"
+
+encoded = text.encode().hex()
+print("Encoded:", encoded)
+
+decoded = bytes.fromhex(encoded).decode()
+print("Decoded:", decoded)
+
+======================================================
+
+Binary Representasi data dalam bit 0 dan 1. Tools BinaryHexConverter
+text = "ABC"
+binary = ' '.join(format(ord(c), '08b') for c in text)
+print(binary)
+
+======================================================
+
+ASCII Setiap karakter memiliki nilai numerik. Tools RapidTables ASCII Table & Converter
+text = "ABC"
+
+ascii_values = [ord(c) for c in text]
+
+print(ascii_values)
+
+======================================================
+
+Morse Code. Tools Boxentriq Morse Translator, Morse Code World
+MORSE = {
+    'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..',
+    'E': '.', 'F': '..-.', 'G': '--.', 'H': '....',
+    'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+    'M': '--', 'N': '-.', 'O': '---', 'P': '.--.',
+    'Q': '--.-', 'R': '.-.', 'S': '...', 'T': '-',
+    'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+    'Y': '-.--', 'Z': '--..',
+    '0': '-----', '1': '.----', '2': '..---',
+    '3': '...--', '4': '....-', '5': '.....',
+    '6': '-....', '7': '--...', '8': '---..',
+    '9': '----.'
+}
+
+text = input("Masukkan teks: ").upper()
+
+encoded = []
+
+for char in text:
+    if char == ' ':
+        encoded.append('/')
+    elif char in MORSE:
+        encoded.append(MORSE[char])
+
+print("Morse:", ' '.join(encoded))
+
+======================================================
+
+URL Encoding Mengubah karakter khusus menjadi format URL.
+from urllib.parse import quote, unquote
+
+text = "Hello World!"
+
+encoded = quote(text)
+print(encoded)
+
+decoded = unquote(encoded)
+print(decoded)
+
+======================================================
+
+ROT13. Tools ROT13
+import codecs
+
+text = "HELLO"
+
+encoded = codecs.encode(text, 'rot_13')
+
+print(encoded)
