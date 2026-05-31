@@ -95,10 +95,11 @@ print(decoded)
 ======================================================
 
 ROT13. Tools ROT13
+
 import codecs
 
-text = "HELLO"
+def rot13(text):
+    return codecs.decode(text, 'rot_13')
 
-encoded = codecs.encode(text, 'rot_13')
-
-print(encoded)
+teks = input("Input: ")
+print("Output:", rot13(teks))
