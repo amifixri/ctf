@@ -1,0 +1,4 @@
+Yang ini jika kita dikasih file jpg/png, lalu dimetadata ketemu yang mencurigakan, coba didecode, jika menghasilkan private key
+buat file .pem dan jalankan script seperti ini
+openssl rsautl -decrypt -inkey pico.pem -in flag.enc
+                                            ^ yang ini file flag-nya
