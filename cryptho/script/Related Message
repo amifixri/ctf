@@ -1,6 +1,18 @@
 Chall ini kalo dua pesan beda dikit tapi dienkripsi dengan kunci yang sama,
 kita bisa balik enkripsinya pakai matematika polinomial.
 
+Franklin-Reiter. Ciri di soal:
+
+Ada RSA (pow(m, e, n))
+e kecil, biasanya 3, 17, atau 65537
+Ada dua ciphertext dari pesan yang berbeda
+Pesannya punya hubungan linear — misal m2 = m1 + c, m2 = m1 - 3, atau m2 = a*m1 + b
+Sering ada print(message - message_fixed) atau sejenisnya yang ngasih tau selisihnya
+
+Kata kunci di source code: ciphertext2, message_fixed, dua kali pow(m, e, n) dengan N sama
+
+
+
 
 from Crypto.Util.number import long_to_bytes
 
