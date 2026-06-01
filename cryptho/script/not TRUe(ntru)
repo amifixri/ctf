@@ -3,6 +3,19 @@ NTRU itu apa?
 Enkripsi berbasis polinomial. 
 Private key-nya f dan g — polinomial dengan koefisien kecil (-1, 0, 1). Public key h = p * f⁻¹ * g mod q.
 
+NTRU Ciri di soal:
+
+Ada variabel N, p, q tapi N kecil (biasanya < 100)
+Ada PolynomialRing, quotient(x^N - 1) di source
+Private key berupa polinomial koefisien kecil (randint(-1, 1))
+Public key h = p * f_inv * g mod q
+Hint biasanya nyebut "lattice"
+Debug info format u:xxx e:xxx p:xxx → itu parameter NTRU
+
+Kata kunci di source code: R_modq, R_modp, gen_poly(), f_q_inv, f_p_inv
+
+
+
 from sage.all import *
 
 N = 48
