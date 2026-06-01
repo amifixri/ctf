@@ -1,0 +1,182 @@
+Chall ini kalo dua pesan beda dikit tapi dienkripsi dengan kunci yang sama,
+kita bisa balik enkripsinya pakai matematika polinomial.
+
+
+from Crypto.Util.number import long_to_bytes
+
+# Baca output.txt
+lines = open('output.txt').read().strip().split('\n')
+c1 = int(lines[0])
+c2 = int(lines[1])
+diff = int(lines[2])  # Message - Message_fixed = -3
+N = int(lines[3])
+e = 0x11  # 17
+
+print(f"[*] e    = {e}")
+print(f"[*] diff = {diff}")
+print(f"[*] N    = {N}")
+
+# =========================================================
+# Polynomial arithmetic mod N
+# Representasi: list koefisien, index = derajat
+# poly[i] = koefisien x^i
+# Contoh: x^2 + 3x + 5 = [5, 3, 1]
+# =========================================================
+
+def poly_add(f, g, N):
+    size = max(len(f), len(g))
+    result = [0] * size
+    for i in range(len(f)):
+        result[i] = (result[i] + f[i]) % N
+    for i in range(len(g)):
+        result[i] = (result[i] + g[i]) % N
+    return result
+
+def poly_sub(f, g, N):
+    size = max(len(f), len(g))
+    result = [0] * size
+    for i in range(len(f)):
+        result[i] = (result[i] + f[i]) % N
+    for i in range(len(g)):
+        result[i] = (result[i] - g[i]) % N
+    return result
+
+def poly_mul(f, g, N):
+    if not f or not g:
+        return [0]
+    result = [0] * (len(f) + len(g) - 1)
+    for i, a in enumerate(f):
+        for j, b in enumerate(g):
+            result[i+j] = (result[i+j] + a * b) % N
+    return result
+
+def poly_scale(f, scalar, N):
+    return [(c * scalar) % N for c in f]
+
+def poly_trim(f):
+    while len(f) > 1 and f[-1] == 0:
+        f.pop()
+    return f
+
+def poly_degree(f):
+    f = poly_trim(f[:])
+    return len(f) - 1
+
+def poly_divmod(f, g, N):
+    """Pembagian polinomial f / g mod N"""
+    f = poly_trim(f[:])
+    g = poly_trim(g[:])
+    
+    if poly_degree(f) < poly_degree(g):
+        return [0], f
+    
+    quot = [0] * (poly_degree(f) - poly_degree(g) + 1)
+    rem = f[:]
+    
+    g_lead_inv = pow(g[-1], -1, N)
+    
+    while poly_degree(rem) >= poly_degree(g) and not (len(rem) == 1 and rem[0] == 0):
+        deg_diff = poly_degree(rem) - poly_degree(g)
+        coeff = (rem[-1] * g_lead_inv) % N
+        quot[deg_diff] = coeff
+        
+        # Kurangi rem dengan coeff * x^deg_diff * g
+        for i, c in enumerate(g):
+            rem[i + deg_diff] = (rem[i + deg_diff] - coeff * c) % N
+        
+        rem = poly_trim(rem)
+    
+    return poly_trim(quot), poly_trim(rem)
+
+def poly_pow_mod(base, exp, mod_poly, N):
+    """base^exp mod mod_poly, semua koefisien mod N"""
+    result = [1]  # polynomial 1
+    base = poly_trim(base[:])
+    
+    while exp > 0:
+        if exp % 2 == 1:
+            result = poly_mul(result, base, N)
+            _, result = poly_divmod(result, mod_poly, N)
+        base = poly_mul(base, base, N)
+        _, base = poly_divmod(base, mod_poly, N)
+        exp //= 2
+    
+    return result
+
+def poly_gcd(f, g, N):
+    """GCD dua polinomial mod N"""
+    f = poly_trim(f[:])
+    g = poly_trim(g[:])
+    
+    while not (len(g) == 1 and g[0] == 0):
+        _, r = poly_divmod(f, g, N)
+        f = g
+        g = poly_trim(r)
+    
+    # Buat monic (koefisien leading = 1)
+    if f[-1] != 0:
+        lead_inv = pow(int(f[-1]), -1, N)
+        f = poly_scale(f, lead_inv, N)
+    
+    return poly_trim(f)
+
+# =========================================================
+# Bangun f1 = x^e - c1
+# Bangun f2 = (x - diff)^e - c2
+# =========================================================
+
+print("\n[*] Membangun polinomial...")
+
+# f1 = x^17 - c1
+f1 = [0] * (e + 1)
+f1[e] = 1
+f1[0] = (-c1) % N
+
+# f2 = (x - diff)^17 - c2
+# Hitung (x - diff)^17 dulu
+# x - diff = [-diff, 1] dalam representasi koefisien
+base = [(-diff) % N, 1]  # x - diff
+
+# Pangkatkan secara manual
+f2_base = [1]
+for _ in range(e):
+    f2_base = poly_mul(f2_base, base, N)
+
+f2_base[0] = (f2_base[0] - c2) % N
+f2 = poly_trim(f2_base)
+
+print(f"[*] Derajat f1: {poly_degree(f1)}")
+print(f"[*] Derajat f2: {poly_degree(f2)}")
+
+# =========================================================
+# Hitung GCD(f1, f2) mod N
+# Hasilnya seharusnya (x - M) sehingga M = -konstanta
+# =========================================================
+
+print("\n[*] Menghitung GCD polinomial (ini mungkin butuh waktu)...")
+g = poly_gcd(f1, f2, N)
+
+print(f"[*] Derajat GCD: {poly_degree(g)}")
+print(f"[*] GCD: {g}")
+
+if poly_degree(g) == 1:
+    # g = x - M  =>  M = -g[0]
+    M = (-g[0]) % N
+    print(f"\n[+] Message (integer): {M}")
+    flag = long_to_bytes(M)
+    print(f"[+] FLAG: {flag}")
+else:
+    print("[-] GCD bukan derajat 1, coba periksa nilai input")
+    print("    Kemungkinan N adalah komposit dan GCD gagal")
+    print("    Coba metode alternatif...")
+    
+    # Coba ambil semua root dari GCD
+    for coef in g:
+        candidate = (-coef) % N
+        if candidate > 0:
+            try:
+                flag = long_to_bytes(candidate)
+                if b'CTF' in flag or b'flag' in flag or b'LKS' in flag:
+                    print(f"[+] FLAG ditemukan: {flag}")
+            except:
+                pass
