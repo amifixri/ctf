@@ -1,0 +1,30 @@
+Chall ini adalah multiprime rsa, yang artinya N = difaktorkan lebih dari 2 faktor prima
+
+from Crypto.Util.number import long_to_bytes
+from math import gcd
+import requests
+
+n = 8749002899132047699790752490331099938058737706735201354674975134719667510377522805717156720453193651
+e = 65537
+ct = 6922480675050049607722767919273094265169824930313752450528383444577397545413062855020890103021658446
+
+# Step 1: Faktorkan N via factordb
+r = requests.get(f'http://factordb.com/api?query={n}')
+data = r.json()
+print(f"Faktors: {data}")
+
+factors = [int(f[0]) for f in data['factors']]
+print(f"Prima: {factors}")
+
+# Step 2: Hitung Carmichael lambda
+def lcm(a, b):
+    return a * b // gcd(a, b)
+
+lam = factors[0] - 1
+for p in factors[1:]:
+    lam = lcm(lam, p - 1)
+
+# Step 3: Hitung d dan decrypt
+d = pow(e, -1, lam)
+m = pow(ct, d, n)
+print(f"Flag: {long_to_bytes(m)}")
