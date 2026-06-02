@@ -1,0 +1,19 @@
+Chall ini diberi file yang diberi hint "Reverse this linux executable?"
+strings dulu file-nya dan di bawah terdapat hint lagi yaitu upx!
+*
+upx file        # pack (compress)
+upx -d file     # unpack (decompress)
+upx -t file     # test / cek apakah valid UPX
+*
+lalu saya test apakah file-nya upx dan ternyata valid.
+saya langsung decompress file nya dan menghasilkan file original.
+
+upx -d out -o original
+
+lalu saya strings file yg original dan grep flag
+
+strings original | grep flag
+
+dan menemukan 7069636f4354467b5539585f556e5034636b314e365f42316e34526933535f31613561336633397d
+
+lalu saya decrypt di cyberchef
