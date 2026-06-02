@@ -1,0 +1,4 @@
+chall ini ngasi file .txt, dan di hint coba pakai base64
+saya mau copy isi .txt-nya, ternyata banyak sekali, langsung aja file nya di lempar ke base64.decode
+setelah itu hasil decode saya jadi file .img, saya buka dan tenyata ada tulisan hex di bagian bawah lalu saya decrypt-in
+hex-nya dan berhasil mendapatkan flag-nya
