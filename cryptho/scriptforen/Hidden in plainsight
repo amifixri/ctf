@@ -1,0 +1,5 @@
+exiftool image dan jika ada comment aneh coba decrypt lalu
+jika muncul output petunjuk seperti "steghide:cEF6endvcmQ=" 
+berarti harus di extract pake steghide dan password nya yang sudah di decrypt 
+steghide extract -sf img.jpg -p pAzzword
+         ^ mode   ^ opsi  ^ file ^ pake paswword
