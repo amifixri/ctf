@@ -1,0 +1,53 @@
+Chall ini dikasih file, dan isinya ASCII. Isinya intruksi 
+
+# ============================================================
+#  XOR CIPHER SOLVER - picoCTF reverse engineering
+# ============================================================
+
+# ✏️ GANTI INI: list angka dari bytecode (LOAD_CONST di BUILD_LIST)
+input_list = [4,54,41,0,112,32,25,49,33,3,0,0,57,32,108,23,
+              48,4,9,70,7,110,36,8,108,7,49,10,4,86,43,59,
+              124,86,0,69,59,47,93,78]
+
+# ============================================================
+# ✏️ GANTI INI: susun key_str sesuai urutan operasi di bytecode
+#
+# Cara baca bytecode-nya:
+#   STORE_NAME key_str          → key_str = nilai awal
+#   LOAD_CONST 'x' + LOAD_NAME key_str + BINARY_ADD → key_str = 'x' + key_str  (prepend)
+#   LOAD_NAME key_str + LOAD_CONST 'x' + BINARY_ADD → key_str = key_str + 'x'  (append)
+#
+# Contoh soal ini:
+#   key_str = 'J'        → assign awal
+#   key_str = '_' + key_str  → prepend '_'   hasil: '_J'
+#   key_str = key_str + 'o'  → append 'o'    hasil: '_Jo'
+#   key_str = key_str + '3'  → append '3'    hasil: '_Jo3'
+#   key_str = 't' + key_str  → prepend 't'   hasil: 't_Jo3'
+# ============================================================
+
+key_str = 'J'           # ✏️ nilai awal key
+key_str = '_' + key_str # ✏️ operasi 1
+key_str = key_str + 'o' # ✏️ operasi 2
+key_str = key_str + '3' # ✏️ operasi 3
+key_str = 't' + key_str # ✏️ operasi 4
+# tambah/hapus baris di atas sesuai jumlah operasi di bytecode
+
+# ============================================================
+# Bagian bawah ini TIDAK perlu diganti
+# ============================================================
+
+# Convert key ke list angka (ord)
+key_list = [ord(c) for c in key_str]
+
+# Repeat key sampai panjangnya >= input_list
+while len(key_list) < len(input_list):
+    key_list.extend(key_list)
+
+# XOR tiap elemen
+result = [a ^ b for a, b in zip(input_list, key_list)]
+
+# Convert hasil ke string
+result_text = ''.join(map(chr, result))
+
+print("Key   :", key_str)
+print("Flag  :", result_text)
