@@ -1,0 +1,4 @@
+chall ini ngasih file .gz
+kita gunzip file 
+lalu strings oh ternyata banyak sekali strings nya, jadi pake grep
+strings dan grep pico
