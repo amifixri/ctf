@@ -1,0 +1,10 @@
+#notes
+JPEG/JFIF: FF D8 FF E0
+PNG: 89 50 4E 47
+PDF: 25 50 44 46
+
+xxd file
+  
+(printf '\xff\xd8' && tail -c +3 file) > repair.jpg
+
+lalu liat file nya via GUI
