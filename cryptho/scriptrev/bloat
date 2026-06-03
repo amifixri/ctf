@@ -1,0 +1,9 @@
+Jalankan dan analisis file .py
+Lalu jika sudah bisa tau password-nya tinggal masukan password, Jika tidak, jalankan program ini
+
+def xor_decrypt(ciphertext_bytes, key):
+    key_ext = (key * (len(ciphertext_bytes) // len(key) + 1))[:len(ciphertext_bytes)]
+    return "".join(chr(b ^ ord(k)) for b, k in zip(ciphertext_bytes, key_ext))
+
+data = open('flag.txt.enc', 'rb').read()
+print(xor_decrypt(data, "rapscallion"))
