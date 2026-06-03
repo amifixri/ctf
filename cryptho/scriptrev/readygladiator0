@@ -1,0 +1,5 @@
+download dulu file-nya
+lalu connect dengan netcat
+lalu nc akan masuk ke dalam file-nya
+lihat file-nya dan ganti mov nya menjadi 0
+lalu nc lagi dan flag-nya ditemukan
