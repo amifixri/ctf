@@ -1,0 +1,30 @@
+gdb file
+Untuk mengetahui fungsi yang tersedia pada binary digunakan perintah:
+info function
+ada file mencurigakan(func1)
+
+Agar assembly lebih mudah dibaca, format disassembly diubah ke Intel syntax:
+set disassembly-main flavor intel
+
+Breakpoint dipasang pada fungsi main:
+break main
+
+Untuk mempermudah analisis instruksi assembly digunakan:
+layout asm
+
+Program dijalankan hingga berhenti pada breakpoint:
+run
+
+Instruksi dijalankan satu per satu menggunakan:
+ni
+
+untuk masuk ke dalam fungsi func1.
+si
+
+Di dalam fungsi func1 ditemukan instruksi:
+imul eax,eax,0x3269
+Instruksi tersebut berarti:
+eax = eax * 0x3269;
+Sehingga dapat diketahui bahwa konstanta yang dicari adalah:
+0x3269
+print 0x3269
