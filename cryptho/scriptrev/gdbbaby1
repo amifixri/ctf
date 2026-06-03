@@ -1,0 +1,25 @@
+Chall ini Tujuannya bukan menebak flag, tetapi mempelajari tools gdb, memahami alur program dan melihat nilai register
+eax saat fungsi main() selesai.
+
+Download file
+lalu cek keterangan file tsb menggunakan file
+
+jalankan file dengan gdb
+cek info function-nya
+
+lalu set assembly default-nya menjadi intel
+set disassembly-flavor intel
+
+terus assembly dengan 
+disassemble main, dan memunculkan output seperti ini
+  0x0000000000001129 <+0>:     endbr64
+   0x000000000000112d <+4>:     push   rbp
+   0x000000000000112e <+5>:     mov    rbp,rsp
+   0x0000000000001131 <+8>:     mov    DWORD PTR [rbp-0x4],edi
+   0x0000000000001134 <+11>:    mov    QWORD PTR [rbp-0x10],rsi
+   0x0000000000001138 <+15>:    mov    eax,0x86342
+
+lalu print nilai hexadecimal-nya
+dan menghasilkan 549698
+dan itu flag-nya
+ 
