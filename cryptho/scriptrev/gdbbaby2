@@ -1,0 +1,21 @@
+Sama seperti gdbbaby1, namun lebih tricky
+download file dan cek keterangan file
+lalu masuk ke dalam file menggunakan gdb
+lihat info fungsi untuk mengetahui ada file yang mencurigakan
+info functions
+lalu set assembly default ke intel
+set set disassembly-flavor intel
+tampilkam assembly dari fungsi main
+disassemble main
+hentikan assembly ketika main
+break main
+tampilkan interface text yg sedang berjalan/interaktif
+layout asm
+run untuk pada baris yg otomatis
+run
+break *0x401142
+lalu continue
+c
+lihat lagi info registers
+ info registers rip
+dan print $eax dan copy untuk masukin flag-nya.
