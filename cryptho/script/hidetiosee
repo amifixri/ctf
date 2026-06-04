@@ -1,0 +1,7 @@
+chall ini dikasih file .jpg 
+download lalu analisi pake exiftool file dan steghide
+steghide info file
+lalu ada file yg bisa di ekstrak dari file tsb
+extract file tsb pakai steghide tanpa password
+steghide extract -sf file
+lalu lihat file hasil ekstrak dan decryp di atbash cipher
