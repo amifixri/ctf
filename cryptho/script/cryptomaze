@@ -1,0 +1,53 @@
+Ini chall yang mengkombinasikan konsep LFSR dan AES-ECB
+
+Isi file yang dikasih:
+LFSR Initial State:
+[0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 
+0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1]
+LFSR Taps:
+[63, 61, 60, 58]
+Encrypted Flag:
+8f0e6d0f5b0dc1db201948b9e0cebd8f06069ee9ff30c87bd50b31d6fd72c4c438338e7e04fbddef0c6260a4eb758417
+
+Ini script solve-nya:
+
+from Crypto.Cipher import AES
+
+# ============================================================
+# CTF LFSR + AES-ECB Solver
+# ============================================================
+
+taps          = [63, 61, 60, 58]   # 0-indexed langsung ke state list
+initial_state = [0,0,1,0,0,1,0,1,1,1,1,0,1,1,0,0,1,0,0,1,0,1,1,0,1,0,0,1,0,1,0,1,
+                 0,1,0,0,1,1,0,1,1,0,0,0,1,0,1,1,1,1,0,0,0,1,0,0,0,1,0,1,1,0,1,1]
+ciphertext_hex = "8f0e6d0f5b0dc1db201948b9e0cebd8f06069ee9ff30c87bd50b31d6fd72c4c438338e7e04fbddef0c6260a4eb758417"
+
+# Step 1: Generate 128-bit keystream via LFSR
+# Taps = 0-indexed, output MSB (st[0]), shift left
+state = list(initial_state)
+bits  = []
+for _ in range(128):
+    bits.append(state[0])              # output bit pertama
+    fb = 0
+    for t in taps:
+        fb ^= state[t]                 # taps 0-indexed
+    state = state[1:] + [fb]           # shift left, masukkan feedback
+
+print(f"[*] Keystream (128 bits): {''.join(map(str, bits))}")
+
+# Step 2: Convert bits -> 16-byte AES key (MSB-first per byte)
+key_bytes = [int(''.join(map(str, bits[i:i+8])), 2) for i in range(0, 128, 8)]
+key = bytes(key_bytes)
+print(f"[*] AES key (hex): {key.hex()}")
+
+# Step 3: Decrypt AES-ECB
+ct     = bytes.fromhex(ciphertext_hex)
+cipher = AES.new(key, AES.MODE_ECB)
+pt     = cipher.decrypt(ct)
+
+# PKCS7 unpad
+pad_len = pt[-1]
+flag    = pt[:-pad_len] if 1 <= pad_len <= 16 else pt
+
+print(f"[+] FLAG: {flag.decode('utf-8', errors='replace')}")
+      
