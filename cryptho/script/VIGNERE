@@ -1,0 +1,5 @@
+chall ini dikasih file .txt
+dan isinya encrypted text
+langsung saja decrypt sesuai chall-nya di vignere
+dan menggunakan key yang sesuai di hint-nya
+lalu pakai mode variant beaufort cipher
