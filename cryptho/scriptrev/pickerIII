@@ -1,0 +1,6 @@
+Connect dengan nc
+lalu pilih 3 = write_variable
+lalu isi variable = win
+lalu panggil lagi 2 yang read_variable
+
+lalu salin hex, dan decrypt di cyberchef
