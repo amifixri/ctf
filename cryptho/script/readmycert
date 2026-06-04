@@ -1,0 +1,5 @@
+Chall ini dikasih file cert
+dan saya 
+openssl req -in readmycert.csr -noout -text
+                ^ (file-nya)
+
