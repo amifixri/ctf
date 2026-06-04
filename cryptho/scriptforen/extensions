@@ -1,0 +1,7 @@
+chall ini diberi langsung flag.txt
+pas dibuka hanya ada strings aneh
+dan pas liat soal chall-nya ada extension
+cek ekstensi file pake exfitool
+dan ternyata ekstensi-nya png/image
+ganti ekstensi file-nya dari txt menjadi png
+dan ketemu flag-nya
