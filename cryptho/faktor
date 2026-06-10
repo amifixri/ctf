@@ -1,0 +1,15 @@
+from Crypto.Util.number import long_to_bytes
+
+enc = 123456789
+
+print(long_to_bytes(enc))
+
+
+-----------
+
+
+from Crypto.Util.number import long_to_bytes
+
+pkey = 123456789
+
+print(long_to_bytes(pkey))
